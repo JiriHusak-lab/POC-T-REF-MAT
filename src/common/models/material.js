@@ -69,7 +69,7 @@ module.exports = function(Material) {
             );
             // app.dataSources.db.transaction(
             promises.push(
-                Material.doSinglePut((item.id == null) ? null : item.id.trim(), (item.kmat == null) ? null : item.kmat.trim(), (item.mvm == null) ? null : item.mvm.trim(), item.hmotnost, item.mnozstvi)
+                Material.doSinglePut(item.id, (item.kmat == null) ? null : item.kmat.trim(), (item.mvm == null) ? null : item.mvm.trim(), item.hmotnost, item.mnozstvi)
                 .then(function(inst) {
                     var mDate = new Date();
                     var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
