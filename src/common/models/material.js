@@ -440,7 +440,7 @@ module.exports = function(Material) {
     Material.doLogic = function(inst, kmat, mvm, hmotnost, mnozstvi, updateData) {
         return new Promise(function(resolve, reject) {
             var resp = {'insertData': null, 'updateData': null, 'inst': inst};
-            if (inst.mvm == mvm) {
+            if (inst.mvm.trim() == mvm.trim()) {
                 resp.updateData = updateData;
                 resolve(resp);
             }
