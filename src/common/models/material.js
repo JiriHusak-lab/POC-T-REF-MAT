@@ -394,21 +394,31 @@ module.exports = function(Material) {
             //    resolve(inst);
             //});
             // 20201031 JHUSAK IGNORE DB ERROR =====
-            Material.create(newMat, function(err, inst) {
-                if (err) {
-                    inst.id = hmotnost;
-                    inst.kmat = kmat;
-                    inst.mvm = mvm;
-                    inst.hmotnost = hmotnost;
-                    inst.mnozstvi = mnozstvi;
-                    console.log(mDateStr, 'DB ERROR - IGNORING: ' + inst.id);
-                    // reject(err);
-                }
-                var mDate = new Date();
-                var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-                console.log(mDateStr, 'Created row with id: ' + inst.id);
-                resolve(inst);
-            });
+            console.log(mDateStr, 'hmotnost: ' + hmotnost);
+            inst.id = hmotnost;
+            inst.kmat = kmat;
+            inst.mvm = mvm;
+            inst.hmotnost = hmotnost;
+            inst.mnozstvi = mnozstvi;
+            console.log(mDateStr, 'resolve(inst)');
+            resolve(inst);
+            // Material.create(newMat, function(err, inst) {
+            //    if (err) {
+            //        console.log(mDateStr, 'newMat.hmotnost: ' + newMat.hmotnost);
+            //        // console.log(mDateStr, 'hmotnost: ' + hmotnost);
+            //        inst.id = newMat.hmotnost;
+            //        inst.kmat = newMat.kmat;
+            //        inst.mvm = newMat.mvm;
+            //        inst.hmotnost = newMat.hmotnost;
+            //        inst.mnozstvi = newMat.mnozstvi;
+            //        console.log(mDateStr, 'DB ERROR - IGNORING: ' + inst.id);
+            //        // reject(err);
+            //    }
+            //    var mDate = new Date();
+            //    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+            //    console.log(mDateStr, 'Created row with id: ' + inst.id);
+            //    resolve(inst);
+            // });
         });
     };
 
