@@ -187,7 +187,7 @@ module.exports = function(Material) {
             } // end switch(scenario)
 
             // 20201031 JHUSAK
-            let transaction = Material.beginTransaction('READ COMMITTED', function(err, tx) {  
+            let transaction2 = Material.beginTransaction('READ COMMITTED', function(err, tx) {  
               switch (workflow) {
               case sc.FLOW_CS:
                 var mDate = new Date();
