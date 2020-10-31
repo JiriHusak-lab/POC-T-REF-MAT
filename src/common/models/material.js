@@ -186,6 +186,25 @@ module.exports = function(Material) {
                 reject({'msg': 'Invalid scenario!'});
             } // end switch(scenario)
 
+            // 20201031 JHUSAK
+            switch (workflow) {
+            case sc.FLOW_CS:
+                console.log('case sc.FLOW_CS - ONLY KAFKA');
+                workflow = sc.FLOW_CS_ONLYKAFKA;
+                kafka.sendEventP(
+                                hmotnost,
+                                kmat,
+                                null,
+                                mvm,
+                                hmotnost,
+                                mnozstvi,
+                                inst
+                            )
+                console.log('case sc.FLOW_CS END');
+                break;
+            }
+            // 20201031 JHUSAK  END    
+                
             // executing wrkflows
             let transaction = Material.beginTransaction('READ COMMITTED', function(err, tx) {
                 switch (workflow) {
@@ -197,19 +216,6 @@ module.exports = function(Material) {
                     reject({'msg': 'Nothing to update!'});
                     break;
                 case sc.FLOW_CS:
-                    console.log('case sc.FLOW_CS');
-                    kafka.sendEventP(
-                                id,
-                                kmat,
-                                null,
-                                mvm,
-                                hmotnost,
-                                mnozstvi,
-                                inst
-                            )
-                    console.log('Should not get here(1)!');
-                    break;
-                case sc.FLOW_CS_ORIG:
                     console.log('case sc.FLOW_CS');
                     return Material.createNew(kmat, mvm, hmotnost, mnozstvi)
                         .then(function(inst) {
@@ -400,42 +406,15 @@ module.exports = function(Material) {
             var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr, ': 00 Registering new item ' + JSON.stringify(newMat) + ' ...');
             console.log(mDateStr, 'hmotnost: ' + hmotnost);
-            // 20201031 JHUSAK ORIGINAL BLOCK  =====  
-            // Material.create(newMat, function(err, inst) {
-            //    if (err) {
-            //        reject(err);
-            //    }
-            //    var mDate = new Date();
-            //    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            //    console.log(mDateStr, 'Created row with id: ' + inst.id);
-            //    resolve(inst);
-            //});
-            // 20201031 JHUSAK IGNORE DB ERROR =====
-            console.log(mDateStr, 'hmotnost: ' + hmotnost);
-            // inst.id = hmotnost;
-            // inst.kmat = kmat;
-            // inst.mvm = mvm;
-            // inst.hmotnost = hmotnost;
-            // inst.mnozstvi = mnozstvi;
-            // console.log(mDateStr, 'resolve(inst)');
-            // resolve(inst);
-            // Material.create(newMat, function(err, inst) {
-            //    if (err) {
-            //        console.log(mDateStr, 'newMat.hmotnost: ' + newMat.hmotnost);
-            //        // console.log(mDateStr, 'hmotnost: ' + hmotnost);
-            //        inst.id = newMat.hmotnost;
-            //        inst.kmat = newMat.kmat;
-            //        inst.mvm = newMat.mvm;
-            //        inst.hmotnost = newMat.hmotnost;
-            //        inst.mnozstvi = newMat.mnozstvi;
-            //        console.log(mDateStr, 'DB ERROR - IGNORING: ' + inst.id);
-            //        // reject(err);
-            //    }
-            //    var mDate = new Date();
-            //    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            //    console.log(mDateStr, 'Created row with id: ' + inst.id);
-            //    resolve(inst);
-            // });
+            Material.create(newMat, function(err, inst) {
+                if (err) {
+                    reject(err);
+                }
+                var mDate = new Date();
+                var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                console.log(mDateStr, 'Created row with id: ' + inst.id);
+                resolve(inst);
+            });
         });
     };
 
