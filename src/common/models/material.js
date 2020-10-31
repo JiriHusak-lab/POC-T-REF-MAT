@@ -383,9 +383,22 @@ module.exports = function(Material) {
             var mDate = new Date();
             var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr, ': Registering new item ' + JSON.stringify(newMat) + ' ...');
+            // 20201031 JHUSAK ORIGINAL BLOCK  =====  
+            // Material.create(newMat, function(err, inst) {
+            //    if (err) {
+            //        reject(err);
+            //    }
+            //    var mDate = new Date();
+            //    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+            //    console.log(mDateStr, 'Created row with id: ' + inst.id);
+            //    resolve(inst);
+            //});
+            // 20201031 JHUSAK IGNORE DB ERROR =====
             Material.create(newMat, function(err, inst) {
                 if (err) {
-                    reject(err);
+                    inst.id = inst.hmotnost;
+                    console.log(mDateStr, 'DB ERROR - IGNORING: ' + inst.id);
+                    // reject(err);
                 }
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
