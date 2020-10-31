@@ -217,11 +217,11 @@ module.exports = function(Material) {
                                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                                 console.log(mDateStr, ': Scenario ', scenario, ' catched error: ', err);
                                 tx.rollback(function(err) {
-                                console.log('Rolled back!');
+                                  console.log('Rolled back!');
                                 });
-                     reject(err);
+                                reject(err);
                 // cb(err);
-                }
+                               });
                 // )
                 // .catch(function(err) {
                 //       console.log('000000  ERROR bbb');
