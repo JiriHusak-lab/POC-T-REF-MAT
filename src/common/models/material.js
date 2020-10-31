@@ -396,7 +396,11 @@ module.exports = function(Material) {
             // 20201031 JHUSAK IGNORE DB ERROR =====
             Material.create(newMat, function(err, inst) {
                 if (err) {
-                    inst.id = inst.hmotnost;
+                    inst.id = hmotnost;
+                    inst.kmat = kmat;
+                    inst.mvm = mvm;
+                    inst.hmotnost = hmotnost;
+                    inst.mnozstvi = mnozstvi;
                     console.log(mDateStr, 'DB ERROR - IGNORING: ' + inst.id);
                     // reject(err);
                 }
