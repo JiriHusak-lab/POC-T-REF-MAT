@@ -193,7 +193,7 @@ module.exports = function(Material) {
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA');
                 console.log(mDateStr, 'Calling kafka.sendEventP');
-                function(inst) {
+                .then(function(inst) {
                   kafka.sendEventP(
                                 hmotnost,
                                 kmat,
@@ -221,7 +221,10 @@ module.exports = function(Material) {
                                 });
                      reject(err);
                 // cb(err);
-                }
+                })
+                .catch(function(err) {
+                       console.log('000000  ERROR bbb');
+                });
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA END');
