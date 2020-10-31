@@ -188,8 +188,8 @@ module.exports = function(Material) {
 
             // 20201031 JHUSAK
             let transaction = Material.beginTransaction('READ COMMITTED', function(err, tx) {  
-            switch (workflow) {
-            case sc.FLOW_CS:
+              switch (workflow) {
+              case sc.FLOW_CS:
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA');
@@ -232,7 +232,8 @@ module.exports = function(Material) {
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA END');
                 workflow = sc.SC_NOTHING2UPDATE;
                 break;
-            }
+              }
+            }  
             // 20201031 JHUSAK  END    
                 
             // executing wrkflows
