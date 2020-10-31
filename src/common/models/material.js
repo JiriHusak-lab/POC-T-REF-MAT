@@ -233,7 +233,7 @@ module.exports = function(Material) {
                 workflow = sc.SC_NOTHING2UPDATE;
                 break;
               }
-            }  
+            })  
             // 20201031 JHUSAK  END    
                 
             // executing wrkflows
