@@ -192,7 +192,7 @@ module.exports = function(Material) {
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA');
-                workflow = sc.FLOW_CS_ONLYKAFKA;
+                console.log(mDateStr, 'Calling kafka.sendEventP');
                 kafka.sendEventP(
                                 hmotnost,
                                 kmat,
@@ -203,6 +203,7 @@ module.exports = function(Material) {
                                 inst
                             )
                                 .then(function(kdata) {
+                                    console.log('Calling tx.commit');
                                     tx.commit(function(err) {
                                       var mDate = new Date();
                                       var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
@@ -213,6 +214,7 @@ module.exports = function(Material) {
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA END');
+                workflow = sc.SC_NOTHING2UPDATE;
                 break;
             }
             // 20201031 JHUSAK  END    
