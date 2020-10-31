@@ -197,6 +197,20 @@ module.exports = function(Material) {
                     reject({'msg': 'Nothing to update!'});
                     break;
                 case sc.FLOW_CS:
+                    console.log('case sc.FLOW_CS');
+                    kafka.sendEventP(
+                                id,
+                                kmat,
+                                null,
+                                mvm,
+                                hmotnost,
+                                mnozstvi,
+                                inst
+                            )
+                    console.log('Should not get here(1)!');
+                    break;
+                case sc.FLOW_CS_ORIG:
+                    console.log('case sc.FLOW_CS');
                     return Material.createNew(kmat, mvm, hmotnost, mnozstvi)
                         .then(function(inst) {
                             kafka.sendEventP(
@@ -228,6 +242,7 @@ module.exports = function(Material) {
                     console.log('Should not get here(1)!');
                     break;
                 case sc.FLOW_FUS:
+                    console.log('case sc.FLOW_FUS');
                     return Material.findInst(id)
                         .then(function(inst) {
                             return Material.updateInst(inst, updateData);
@@ -255,6 +270,7 @@ module.exports = function(Material) {
                         });
                     break;
                 case sc.FLOW_FLUCS:
+                    console.log('case sc.FLOW_FLUCS');
                     return Material.findInst(id)
                         .then(function(inst) {
                         // perform logic; result will influence next steps
@@ -382,7 +398,8 @@ module.exports = function(Material) {
             var newMat = {'kmat': kmat, 'mvm': mvm, 'hmotnost': hmotnost, 'mnozstvi': mnozstvi};
             var mDate = new Date();
             var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            console.log(mDateStr, ': Registering new item ' + JSON.stringify(newMat) + ' ...');
+            console.log(mDateStr, ': 00 Registering new item ' + JSON.stringify(newMat) + ' ...');
+            console.log(mDateStr, 'hmotnost: ' + hmotnost);
             // 20201031 JHUSAK ORIGINAL BLOCK  =====  
             // Material.create(newMat, function(err, inst) {
             //    if (err) {
@@ -395,13 +412,13 @@ module.exports = function(Material) {
             //});
             // 20201031 JHUSAK IGNORE DB ERROR =====
             console.log(mDateStr, 'hmotnost: ' + hmotnost);
-            inst.id = hmotnost;
-            inst.kmat = kmat;
-            inst.mvm = mvm;
-            inst.hmotnost = hmotnost;
-            inst.mnozstvi = mnozstvi;
-            console.log(mDateStr, 'resolve(inst)');
-            resolve(inst);
+            // inst.id = hmotnost;
+            // inst.kmat = kmat;
+            // inst.mvm = mvm;
+            // inst.hmotnost = hmotnost;
+            // inst.mnozstvi = mnozstvi;
+            // console.log(mDateStr, 'resolve(inst)');
+            // resolve(inst);
             // Material.create(newMat, function(err, inst) {
             //    if (err) {
             //        console.log(mDateStr, 'newMat.hmotnost: ' + newMat.hmotnost);
