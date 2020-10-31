@@ -189,7 +189,9 @@ module.exports = function(Material) {
             // 20201031 JHUSAK
             switch (workflow) {
             case sc.FLOW_CS:
-                console.log('case sc.FLOW_CS - ONLY KAFKA');
+                var mDate = new Date();
+                var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA');
                 workflow = sc.FLOW_CS_ONLYKAFKA;
                 kafka.sendEventP(
                                 hmotnost,
@@ -200,7 +202,17 @@ module.exports = function(Material) {
                                 mnozstvi,
                                 inst
                             )
-                console.log('case sc.FLOW_CS END');
+                                .then(function(kdata) {
+                                    tx.commit(function(err) {
+                                      var mDate = new Date();
+                                      var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                                      console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA  Committed');
+                                    });
+                                    resolve(inst);
+                                });
+                var mDate = new Date();
+                var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA END');
                 break;
             }
             // 20201031 JHUSAK  END    
