@@ -208,12 +208,12 @@ module.exports = function(Material) {
                                 inst
                             )
                                 .then(function(kdata) {
-                                    console.log('Calling tx.commit');
-                                    tx.commit(function(err) {
-                                      var mDate = new Date();
-                                      var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-                                      console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA  Committed');
-                                    });
+                                    console.log('KAFKA_ONLY - Calling tx.commit');
+                                    // tx.commit(function(err) {
+                                    //   var mDate = new Date();
+                                    //   var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                                    //  console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA  Committed');
+                                    // });
                                     resolve(inst);
                                 })
                                 .catch(function(err) {
@@ -251,6 +251,7 @@ module.exports = function(Material) {
                 case sc.FLOW_CS:
                     console.log('case sc.FLOW_CS');
                     // 20201101 JHUSAK REMOIVE this break!!!!!! Just for test
+                    console.log('case sc.FLOW_CS temporarilly break;');
                     break;
                     return Material.createNew(kmat, mvm, hmotnost, mnozstvi)
                         .then(function(inst) {
