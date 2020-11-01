@@ -186,10 +186,12 @@ module.exports = function(Material) {
                 reject({'msg': 'Invalid scenario!'});
             } // end switch(scenario)
 
-            // 20201031 JHUSAK
+            // 20201031 JHUSAK  =================================================================================================
             let transaction2 = Material.beginTransaction('READ COMMITTED', function(err, tx) {  
               switch (workflow) {
               case sc.FLOW_CS:
+                workflow = sc.SC_NOTHING2UPDATE;
+                console.log(mDateStr, 'case ' + workflow);
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 var inst = null;
@@ -222,22 +224,21 @@ module.exports = function(Material) {
                                   console.log('Rolled back!');
                                 });
                                 reject(err);
-                // cb(err);
-                               });
-                // )
-                // .catch(function(err) {
-                //       console.log('000000  ERROR bbb');
-                // });
+                            })
+                            .catch(function(err) {
+                              console.log('000000  ERROR bbb');
+                            });
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA END');
                 workflow = sc.SC_NOTHING2UPDATE;
+                console.log(mDateStr, 'case ' + workflow);
                 break;
               }
             })  
-            // 20201031 JHUSAK  END    
+            // 20201031 JHUSAK  END  =================================================================================================    
                 
-            // executing wrkflows
+            // executing workflows
             let transaction = Material.beginTransaction('READ COMMITTED', function(err, tx) {
                 switch (workflow) {
                 case sc.FLOW_NOTHING:
@@ -249,6 +250,8 @@ module.exports = function(Material) {
                     break;
                 case sc.FLOW_CS:
                     console.log('case sc.FLOW_CS');
+                    // 20201101 JHUSAK REMOIVE this break!!!!!! Just for test
+                    break;
                     return Material.createNew(kmat, mvm, hmotnost, mnozstvi)
                         .then(function(inst) {
                             kafka.sendEventP(
