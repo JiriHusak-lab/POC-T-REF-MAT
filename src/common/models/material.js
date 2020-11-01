@@ -192,6 +192,7 @@ module.exports = function(Material) {
               case sc.FLOW_CS:
                 var mDate = new Date();
                 var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+                var inst = null;
                 console.log(mDateStr, 'case sc.FLOW_CS - ONLY KAFKA');
                 console.log(mDateStr, 'Calling kafka.sendEventP');
                 //.then(function(inst) {
